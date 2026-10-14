@@ -203,3 +203,18 @@ func commandInspect(c *config) error {
 	}
 	return nil
 }
+
+func commandPokedex(c *config) error {
+
+	if len(c.Pokedex) == 0 {
+		fmt.Println("You have to catch some Pokemons first!")
+		return nil
+	}
+
+	fmt.Println("Your Pokedex:")
+	for key := range c.Pokedex {
+		fmt.Printf("- %s\n", key)
+	}
+
+	return nil
+}

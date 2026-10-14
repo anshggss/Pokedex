@@ -53,6 +53,11 @@ func Repl() {
 			description: "Inspects a given Pokemon",
 			callback:    commandInspect,
 		},
+		"pokedex": cliCommand{
+			name:        "pokedex",
+			description: "Lists your Pokedex",
+			callback:    commandPokedex,
+		},
 	}
 
 	// Config that stores the state used by all the commands
