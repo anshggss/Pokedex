@@ -20,6 +20,7 @@ type config struct {
 	catchPokemon    string
 	catchURL        string
 	Pokedex         map[string]CatchPokemonInfo
+	inspectPokemon  string
 }
 
 type mapResponse struct {
@@ -47,8 +48,21 @@ type PokeInfo struct {
 }
 
 type CatchPokemonInfo struct {
-	Name   string `json:"name"`
-	BaseXP int    `json:"base_experience"`
-	Height int    `json:"height"`
-	Weight int    `json:"weight"`
+	Name   string        `json:"name"`
+	BaseXP int           `json:"base_experience"`
+	Height int           `json:"height"`
+	Weight int           `json:"weight"`
+	Stats  []StatInter   `json:"stats"`
+	Type   []TypeWrapper `json:"types"`
+}
+
+type StatInter struct {
+	Base int `json:"base_stat"`
+}
+
+type TypeWrapper struct {
+	Pt PokeType `json:"type"`
+}
+type PokeType struct {
+	Name string `json:"name"`
 }

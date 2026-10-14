@@ -180,3 +180,25 @@ func commandCatch(c *config) error {
 
 	return nil
 }
+
+func commandInspect(c *config) error {
+	pokeinfo, ok := c.Pokedex[c.inspectPokemon]
+	if !ok {
+		return fmt.Errorf("You haven't caught this pokemon yet")
+	}
+	fmt.Printf("Name: %s\n", pokeinfo.Name)
+	fmt.Printf("Height: %d\n", pokeinfo.Height)
+	fmt.Printf("Weight: %d\n", pokeinfo.Weight)
+	fmt.Printf("Stats:\n")
+	fmt.Printf("	-hp: %d\n", pokeinfo.Stats[0].Base)
+	fmt.Printf("	-attack: %d\n", pokeinfo.Stats[1].Base)
+	fmt.Printf("	-defense: %d\n", pokeinfo.Stats[2].Base)
+	fmt.Printf("	-special-attack: %d\n", pokeinfo.Stats[3].Base)
+	fmt.Printf("	-special-defense: %d\n", pokeinfo.Stats[4].Base)
+	fmt.Printf("	-speed: %d\n", pokeinfo.Stats[5].Base)
+	fmt.Printf("Types:\n")
+	for _, pt := range pokeinfo.Type {
+		fmt.Printf("- %s\n", pt.Pt.Name)
+	}
+	return nil
+}

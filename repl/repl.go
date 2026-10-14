@@ -48,6 +48,11 @@ func Repl() {
 			description: "Catches a given Pokemon",
 			callback:    commandCatch,
 		},
+		"inspect": cliCommand{
+			name:        "inspect",
+			description: "Inspects a given Pokemon",
+			callback:    commandInspect,
+		},
 	}
 
 	// Config that stores the state used by all the commands
@@ -63,6 +68,7 @@ func Repl() {
 		catchPokemon:    "",
 		catchURL:        "https://pokeapi.co/api/v2/pokemon/",
 		Pokedex:         map[string]CatchPokemonInfo{},
+		inspectPokemon:  "",
 	}
 
 	for {
@@ -90,6 +96,9 @@ func Repl() {
 			}
 			if command.name == "catch" {
 				dexConfig.catchPokemon = cleanedInput[1]
+			}
+			if command.name == "inspect" {
+				dexConfig.inspectPokemon = cleanedInput[1]
 			}
 
 			err := command.callback(dexConfig)
