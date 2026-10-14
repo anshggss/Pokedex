@@ -17,6 +17,9 @@ type config struct {
 	exploreCache    pokecache.Cache
 	cmdArgs         []string
 	exploreURL      string
+	catchPokemon    string
+	catchURL        string
+	Pokedex         map[string]CatchPokemonInfo
 }
 
 type mapResponse struct {
@@ -41,4 +44,11 @@ type Pokemon struct {
 
 type PokeInfo struct {
 	Name string `json:"name"`
+}
+
+type CatchPokemonInfo struct {
+	Name   string `json:"name"`
+	BaseXP int    `json:"base_experience"`
+	Height int    `json:"height"`
+	Weight int    `json:"weight"`
 }

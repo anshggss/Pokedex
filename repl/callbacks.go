@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"math/rand"
 	"net/http"
 	"os"
 )
@@ -136,6 +137,45 @@ func commandExplore(c *config) error {
 
 	for _, pokemon := range decoded.Pokemons {
 		fmt.Println(pokemon.Info.Name)
+	}
+
+	return nil
+}
+
+func commandCatch(c *config) error {
+
+	if c.catchPokemon == "" {
+		return fmt.Errorf("Enter a pokemon name")
+	}
+
+	fullURL := c.catchURL + c.catchPokemon
+	res, err := http.Get(fullURL)
+
+	if err != nil {
+		return err
+	}
+	if int(res.StatusCode/100) != 2 {
+		return fmt.Errorf("Invalid Pokemon name")
+	}
+
+	defer res.Body.Close()
+	decoder := json.NewDecoder(res.Body)
+	var decoded CatchPokemonInfo
+	if err := decoder.Decode(&decoded); err != nil {
+		return err
+	}
+
+	fmt.Printf("Throwing a Pokeball at %s...\n", decoded.Name)
+
+	chance := int(decoded.BaseXP / 20)
+	myNumber := rand.Intn(chance)
+	finNumber := rand.Intn(chance)
+
+	if myNumber != finNumber {
+		fmt.Printf("%s escaped!\n", c.catchPokemon)
+	} else {
+		fmt.Printf("%s was caught!\n", c.catchPokemon)
+		c.Pokedex[decoded.Name] = decoded
 	}
 
 	return nil

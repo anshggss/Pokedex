@@ -43,6 +43,11 @@ func Repl() {
 			description: "Lists all the pokemons in a location area",
 			callback:    commandExplore,
 		},
+		"catch": cliCommand{
+			name:        "catch",
+			description: "Catches a given Pokemon",
+			callback:    commandCatch,
+		},
 	}
 
 	// Config that stores the state used by all the commands
@@ -55,6 +60,9 @@ func Repl() {
 		exploreCache:    pokecache.NewCache(10 * time.Second),
 		cmdArgs:         nil,
 		exploreURL:      "https://pokeapi.co/api/v2/location-area/",
+		catchPokemon:    "",
+		catchURL:        "https://pokeapi.co/api/v2/pokemon/",
+		Pokedex:         map[string]CatchPokemonInfo{},
 	}
 
 	for {
@@ -80,10 +88,13 @@ func Repl() {
 			if command.name == "explore" {
 				dexConfig.cmdArgs = cleanedInput[1:]
 			}
+			if command.name == "catch" {
+				dexConfig.catchPokemon = cleanedInput[1]
+			}
 
 			err := command.callback(dexConfig)
 			if err != nil {
-				fmt.Println("Error with callback: %w", err)
+				fmt.Printf("Error with callback: %s\n", err.Error())
 			}
 
 			fmt.Print("Pokedex > ")
