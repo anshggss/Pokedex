@@ -30,12 +30,12 @@ func Repl() {
 		},
 		"map": cliCommand{
 			name:        "map",
-			description: "Lists 20 locations on the map",
+			description: "Lists 20 locations on the map and moves to the next map list",
 			callback:    commandMap,
 		},
 		"mapb": cliCommand{
 			name:        "mapb",
-			description: "Lists 20 locations on the map",
+			description: "Lists 20 locations on the map and moves to the previous map list",
 			callback:    commandMapB,
 		},
 		"explore": cliCommand{

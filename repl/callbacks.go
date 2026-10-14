@@ -16,11 +16,12 @@ func commandExit(c *config) error {
 }
 
 func commandHelp(c *config) error {
-	fmt.Println(`Welcome to the Pokedex!
-Usage:
+	fmt.Printf("\nWelcome to the Pokedex!\n")
+	fmt.Printf("\nUsage:\n\n")
+	for command, val := range c.commandRegistry {
 
-help: Displays a help message
-exit: Exit the Pokedex`)
+		fmt.Printf("%s: %s\n", command, val.description)
+	}
 	return nil
 }
 
